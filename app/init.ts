@@ -1,6 +1,6 @@
 import { Router } from "@common-module/app";
 import { UniversalWalletConnector } from "@common-module/wallet";
-import Home from "./Home.js";
+import HomeView from "./HomeView.js";
 
 export default async function init() {
   UniversalWalletConnector.init({
@@ -19,5 +19,5 @@ export default async function init() {
     },
   });
 
-  Router.route("", Home);
+  Router.add("/", HomeView);
 }

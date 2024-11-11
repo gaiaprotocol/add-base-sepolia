@@ -1,6 +1,9 @@
 import { DomNode, el } from "@common-module/app";
-import { Button } from "@common-module/app-components";
-import { WalletConnectionManager } from "@common-module/wallet";
+import { Button, ButtonType } from "@common-module/app-components";
+import {
+  WalletConnectionManager,
+  WalletConnectionPopup,
+} from "@common-module/wallet";
 
 export default class WalletSection extends DomNode {
   constructor() {
@@ -10,8 +13,8 @@ export default class WalletSection extends DomNode {
   }
 
   private render() {
-    this.empty().append(
-      ...(WalletConnectionManager.connected
+    this.clear().append(
+      ...(WalletConnectionManager.isConnected
         ? [
           el(
             "p",
@@ -23,6 +26,7 @@ export default class WalletSection extends DomNode {
             }),
           ),
           new Button({
+            type: ButtonType.Contained,
             title: "Disconnect Wallet",
             onClick: () => WalletConnectionManager.disconnect(),
           }),
@@ -30,8 +34,9 @@ export default class WalletSection extends DomNode {
         : [
           el("p", "You haven't connected a wallet."),
           new Button({
+            type: ButtonType.Contained,
             title: "Connect Wallet",
-            onClick: () => WalletConnectionManager.connect(),
+            onClick: () => new WalletConnectionPopup(),
           }),
         ]),
     );
